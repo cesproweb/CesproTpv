@@ -1,0 +1,102 @@
+/* ============================
+   MENÚ SUPERIOR CLÁSICO WINDOWS
+   ============================ */
+.classic-menu-bar {
+    -fx-background-color: #f0f0f0;      /* gris claro */
+    -fx-padding: 0 5;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.classic-menu-bar .menu {
+    -fx-padding: 2 10;                  /* altura mínima */
+}
+
+.classic-menu-bar .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+}
+
+.classic-menu-bar .menu:hover {
+    -fx-background-color: #e5e5e5;      /* hover suave */
+}
+
+.classic-menu-bar .menu-item {
+    -fx-padding: 4 20;
+}
+
+.classic-menu-bar .menu-item:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* ============================
+   RIBBON (CINTA DE ICONOS)
+   ============================ */
+.ribbon {
+    -fx-background-color: #dcdcdc;
+    -fx-padding: 8;
+    -fx-spacing: 15;
+    -fx-border-color: #c0c0c0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ribbon-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b0b0b0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 8 15;
+}
+
+.ribbon-button:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+/* ============================
+   BARRA SUPERIOR (TÍTULO)
+   ============================ */
+.top-bar {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 10;
+}
+
+.title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* ============================
+   MENÚ LATERAL
+   ============================ */
+.side-menu {
+    -fx-background-color: #34495e;
+    -fx-padding: 10;
+    -fx-spacing: 15;
+}
+
+.side-menu-button {
+    -fx-background-color: #3b5998;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-pref-width: 180px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+}
+
+.side-menu-button:hover {
+    -fx-background-color: #4a6bb3;
+}
+
+/* ============================
+   ZONA CENTRAL
+   ============================ */
+.center-pane {
+    -fx-background-color: #ecf0f1;
+}
+
+.screen-label {
+    -fx-font-size: 28px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
