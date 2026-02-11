@@ -19,7 +19,7 @@ import javafx.stage.FileChooser;
 public class MainView extends BorderPane {
 
     private StackPane centerPane;
-    private ImageView logoCliente; // Logo del cliente
+    private ImageView logoCliente;
 
     public MainView() {
         setTop(createTopSection());
@@ -27,9 +27,6 @@ public class MainView extends BorderPane {
         setCenter(createCenterPane());
     }
 
-    /* ============================
-       SECCIÓN SUPERIOR COMPLETA
-       ============================ */
     private VBox createTopSection() {
         VBox topSection = new VBox();
         topSection.getChildren().addAll(
@@ -40,14 +37,16 @@ public class MainView extends BorderPane {
         return topSection;
     }
 
-    /* ============================
-       MENÚ SUPERIOR CLÁSICO
-       ============================ */
+    /* ============================================================
+       MENÚ SUPERIOR COMPLETO (TPV PROFESIONAL)
+       ============================================================ */
     private MenuBar createMenuBar() {
         MenuBar menuBar = new MenuBar();
         menuBar.getStyleClass().add("classic-menu-bar");
 
-        // ARCHIVO
+        /* ============================
+           ARCHIVO
+           ============================ */
         Menu archivo = new Menu("Archivo");
         MenuItem nuevo = new MenuItem("Nuevo");
         MenuItem abrir = new MenuItem("Abrir");
@@ -57,100 +56,203 @@ public class MainView extends BorderPane {
         salir.setOnAction(e -> mostrarConfirmacionSalida());
         archivo.getItems().addAll(nuevo, abrir, guardar, guardarComo, salir);
 
-        // VENTAS
+        /* ============================
+           VENTAS / TPV
+           ============================ */
         Menu ventas = new Menu("Ventas");
+
+        MenuItem nuevaVenta = new MenuItem("Nueva venta");
+        MenuItem seleccionArticulos = new MenuItem("Selección de artículos");
+        MenuItem busqueda = new MenuItem("Búsqueda por código / nombre");
+        MenuItem descuentos = new MenuItem("Aplicar descuentos");
+        MenuItem clientesVenta = new MenuItem("Clientes (seleccionar / crear)");
+
+        // Submenú Métodos de pago
+        Menu metodosPago = new Menu("Métodos de pago");
+        metodosPago.getItems().addAll(
+            new MenuItem("Efectivo"),
+            new MenuItem("Tarjeta"),
+            new MenuItem("Transferencia"),
+            new MenuItem("Bizum"),
+            new MenuItem("Pago mixto")
+        );
+
+        MenuItem abrirCajon = new MenuItem("Abrir cajón");
+        MenuItem cancelarVenta = new MenuItem("Cancelar / pausar venta");
+        MenuItem devoluciones = new MenuItem("Devoluciones");
+        MenuItem reimpresion = new MenuItem("Reimpresión de ticket");
+        MenuItem factura = new MenuItem("Factura simplificada / completa");
+
         ventas.getItems().addAll(
-            new MenuItem("Nueva venta"),
-            new MenuItem("Selección de artículos"),
-            new MenuItem("Búsqueda por código / nombre"),
-            new MenuItem("Aplicar descuentos"),
-            new MenuItem("Clientes (seleccionar / crear)"),
-            new MenuItem("Abrir Cajón)"),
-            new MenuItem("Cancelar ventas)"),
-            new MenuItem("Devoluciones)"),
-            new MenuItem("Reimprimir ticket)"),
-            new MenuItem("Factura Simplificada)")
+            nuevaVenta, seleccionArticulos, busqueda, descuentos,
+            clientesVenta, metodosPago, abrirCajon, cancelarVenta,
+            devoluciones, reimpresion, factura
         );
-        
-        // ARTICULOS 
-        Menu articulos = new Menu ("Árticulos");
+
+        /* ============================
+           ARTÍCULOS / PRODUCTOS
+           ============================ */
+        Menu articulos = new Menu("Artículos");
         articulos.getItems().addAll(
-        		new MenuItem("Lista de artículos"),
-                new MenuItem("Crear / editar / eliminar producto"),
-                new MenuItem("Categorías"),
-                new MenuItem("Subcategorías"),
-                new MenuItem("Precios"),
-                new MenuItem("Impuestos"),
-                new MenuItem("Códigos de Barras"),
-                new MenuItem("Stock mínimo"),
-                new MenuItem("Productos con variantes")
-        		);
-        
-        // CLIENTES 
-        Menu clientes = new Menu ("Clientes");
+            new MenuItem("Lista de artículos"),
+            new MenuItem("Crear / editar / eliminar producto"),
+            new MenuItem("Categorías"),
+            new MenuItem("Subcategorías"),
+            new MenuItem("Precios"),
+            new MenuItem("Impuestos"),
+            new MenuItem("Códigos de barras"),
+            new MenuItem("Stock mínimo"),
+            new MenuItem("Productos con variantes")
+        );
+
+        /* ============================
+           CLIENTES
+           ============================ */
+        Menu clientes = new Menu("Clientes");
         clientes.getItems().addAll(
-        		new MenuItem("Lista de artículos"),
-                new MenuItem("Crear / editar / eliminar producto"),
-                new MenuItem("Categorías"),
-                new MenuItem("Subcategorías"),
-                new MenuItem("Precios"),
-                new MenuItem("Impuestos"),
-                new MenuItem("Códigos de Barras"),
-                new MenuItem("Stock mínimo"),
-                new MenuItem("Productos con variantes")
-        		);
-        // EDITAR
-        Menu editar = new Menu("Editar");
-        editar.getItems().addAll(
-            new MenuItem("Copiar"),
-            new MenuItem("Pegar"),
-            new MenuItem("Cortar"),
-            new MenuItem("Seleccionar todo")
+            new MenuItem("Alta de cliente"),
+            new MenuItem("Edición de cliente"),
+            new MenuItem("Historial de compras"),
+            new MenuItem("Saldo / crédito"),
+            new MenuItem("Descuentos personalizados"),
+            new MenuItem("Facturación a cliente"),
+            new MenuItem("Fidelización (puntos, tarjetas)")
         );
 
-        // VER
-        Menu ver = new Menu("Ver");
-        ver.getItems().addAll(
-            new MenuItem("Pantalla completa"),
-            new MenuItem("Zoom"),
-            new MenuItem("Barra de estado")
+        /* ============================
+           PROVEEDORES
+           ============================ */
+        Menu proveedores = new Menu("Proveedores");
+        proveedores.getItems().addAll(
+            new MenuItem("Alta de proveedor"),
+            new MenuItem("Pedidos a proveedor"),
+            new MenuItem("Recepción de mercancía"),
+            new MenuItem("Albaranes"),
+            new MenuItem("Facturas de proveedor"),
+            new MenuItem("Coste de producto")
         );
 
-        // HERRAMIENTAS
-        Menu herramientas = new Menu("Herramientas");
+        /* ============================
+           ALMACÉN / STOCK
+           ============================ */
+        Menu stock = new Menu("Stock");
+        stock.getItems().addAll(
+            new MenuItem("Entradas de stock"),
+            new MenuItem("Salidas de stock"),
+            new MenuItem("Regularización"),
+            new MenuItem("Inventario"),
+            new MenuItem("Stock por tienda / almacén"),
+            new MenuItem("Traspasos entre tiendas"),
+            new MenuItem("Avisos de stock bajo")
+        );
 
-        MenuItem opciones = new MenuItem("Opciones");
+        /* ============================
+           CAJA
+           ============================ */
+        Menu caja = new Menu("Caja");
+        caja.getItems().addAll(
+            new MenuItem("Apertura de caja"),
+            new MenuItem("Cierre de caja"),
+            new MenuItem("Arqueo"),
+            new MenuItem("Entradas de efectivo"),
+            new MenuItem("Salidas de efectivo"),
+            new MenuItem("Movimientos de caja"),
+            new MenuItem("Diferencias de caja"),
+            new MenuItem("Informes diarios")
+        );
 
-        // SUBMENÚ PREFERENCIAS
-        Menu preferencias = new Menu("Preferencias");
+        /* ============================
+           INFORMES
+           ============================ */
+        Menu informes = new Menu("Informes");
+        informes.getItems().addAll(
+            new MenuItem("Ventas por día / mes / año"),
+            new MenuItem("Ventas por empleado"),
+            new MenuItem("Ventas por producto"),
+            new MenuItem("Ventas por categoría"),
+            new MenuItem("Beneficio / margen"),
+            new MenuItem("Impuestos (IVA)"),
+            new MenuItem("Métodos de pago"),
+            new MenuItem("Top ventas"),
+            new MenuItem("Productos sin rotación")
+        );
 
-        MenuItem cambiarLogo = new MenuItem("Cambiar logo");
-        cambiarLogo.setOnAction(e -> seleccionarLogoCliente());
+        /* ============================
+           USUARIOS / EMPLEADOS
+           ============================ */
+        Menu usuarios = new Menu("Usuarios");
+        usuarios.getItems().addAll(
+            new MenuItem("Alta de usuario"),
+            new MenuItem("Roles"),
+            new MenuItem("Permisos"),
+            new MenuItem("Turnos"),
+            new MenuItem("Registro de actividad"),
+            new MenuItem("Ventas por empleado")
+        );
 
-        preferencias.getItems().add(cambiarLogo);
+        /* ============================
+        CONFIGURACIÓN
+        ============================ */
+     Menu configuracion = new Menu("Configuración");
 
-        MenuItem actualizaciones = new MenuItem("Actualizaciones");
+     MenuItem datosEmpresa = new MenuItem("Datos de la empresa");
+     MenuItem impuestos = new MenuItem("Impuestos");
+     MenuItem seriesFacturacion = new MenuItem("Series de facturación");
+     MenuItem formatoTicket = new MenuItem("Formato de ticket");
 
-        herramientas.getItems().addAll(opciones, preferencias, actualizaciones);
+     // ✔ Aquí está la opción de cambiar logo funcionando
+     MenuItem logoEmpresa = new MenuItem("Logo");
+     logoEmpresa.setOnAction(e -> seleccionarLogoCliente());
 
-        // AYUDA
+     MenuItem idioma = new MenuItem("Idioma");
+     MenuItem moneda = new MenuItem("Moneda");
+     MenuItem metodosPagoConfig = new MenuItem("Métodos de pago");
+     MenuItem hardware = new MenuItem("Integración con hardware");
+     MenuItem backups = new MenuItem("Copias de seguridad");
+
+     configuracion.getItems().addAll(
+         datosEmpresa,
+         impuestos,
+         seriesFacturacion,
+         formatoTicket,
+         logoEmpresa,   // ← AQUÍ ESTÁ TU OPCIÓN FUNCIONAL
+         idioma,
+         moneda,
+         metodosPagoConfig,
+         hardware,
+         backups
+     );
+;
+
+        /* ============================
+           AYUDA / SISTEMA
+           ============================ */
         Menu ayuda = new Menu("Ayuda");
-        MenuItem soporte = new MenuItem("Soporte");
+        MenuItem soporte = new MenuItem("Soporte técnico");
         soporte.setOnAction(e -> mostrarVentanaSoporte());
-        MenuItem acerca = new MenuItem("Acerca de");
-        MenuItem documentacion = new MenuItem("Documentación");
-        ayuda.getItems().addAll(acerca, soporte, documentacion);
+        ayuda.getItems().addAll(
+            new MenuItem("Manual de uso"),
+            soporte,
+            new MenuItem("Actualizaciones"),
+            new MenuItem("Licencia"),
+            new MenuItem("Cerrar sesión"),
+            new MenuItem("Salir del programa")
+        );
 
+        /* ============================
+           AÑADIR TODO AL MENÚ SUPERIOR
+           ============================ */
         menuBar.getMenus().addAll(
-            archivo, ventas,articulos, clientes,editar, ver, herramientas, ayuda
+            archivo, ventas, articulos, clientes, proveedores,
+            stock, caja, informes, usuarios, configuracion, ayuda
         );
 
         return menuBar;
     }
 
-    /* ============================
-       RIBBON CON ICONOS
-       ============================ */
+    /* ============================================================
+       RIBBON (NO MODIFICADO)
+       ============================================================ */
     private HBox createRibbon() {
         HBox ribbon = new HBox();
         ribbon.setPadding(new Insets(8));
@@ -178,9 +280,9 @@ public class MainView extends BorderPane {
         return button;
     }
 
-    /* ============================
+    /* ============================================================
        BARRA SUPERIOR (TÍTULO + LOGO)
-       ============================ */
+       ============================================================ */
     private HBox createTopBar() {
         HBox topBar = new HBox();
         topBar.setPadding(new Insets(10));
@@ -192,8 +294,8 @@ public class MainView extends BorderPane {
         title.getStyleClass().add("title");
 
         logoCliente = new ImageView();
-        logoCliente.setFitWidth(45);
-        logoCliente.setFitHeight(45);
+        logoCliente.setFitWidth(70);   // ← MÁS GRANDE
+        logoCliente.setFitHeight(70);  // ← MÁS GRANDE
         logoCliente.setPreserveRatio(true);
 
         HBox spacer = new HBox();
@@ -203,9 +305,9 @@ public class MainView extends BorderPane {
         return topBar;
     }
 
-    /* ============================
-       MENÚ LATERAL
-       ============================ */
+    /* ============================================================
+       MENÚ LATERAL (NO MODIFICADO)
+       ============================================================ */
     private VBox createSideMenu() {
         VBox menu = new VBox();
         menu.setPadding(new Insets(10));
@@ -231,9 +333,6 @@ public class MainView extends BorderPane {
         return menu;
     }
 
-    /* ============================
-       ZONA CENTRAL
-       ============================ */
     private StackPane createCenterPane() {
         centerPane = new StackPane();
         centerPane.getStyleClass().add("center-pane");
@@ -242,16 +341,14 @@ public class MainView extends BorderPane {
 
     private void showScreen(String screen) {
         centerPane.getChildren().clear();
-
         Label label = new Label("Pantalla: " + screen);
         label.getStyleClass().add("screen-label");
-
         centerPane.getChildren().add(label);
     }
 
-    /* ============================
+    /* ============================================================
        VENTANA SOPORTE
-       ============================ */
+       ============================================================ */
     private void mostrarVentanaSoporte() {
         javafx.stage.Stage ventana = new javafx.stage.Stage();
         ventana.setTitle("Soporte técnico");
@@ -286,9 +383,9 @@ public class MainView extends BorderPane {
         ventana.show();
     }
 
-    /* ============================
+    /* ============================================================
        CONFIRMACIÓN DE SALIDA
-       ============================ */
+       ============================================================ */
     private void mostrarConfirmacionSalida() {
         javafx.stage.Stage ventana = new javafx.stage.Stage();
         ventana.setTitle("Confirmar salida");
@@ -326,9 +423,9 @@ public class MainView extends BorderPane {
         ventana.show();
     }
 
-    /* ============================
+    /* ============================================================
        SELECCIONAR LOGO DEL CLIENTE
-       ============================ */
+       ============================================================ */
     private void seleccionarLogoCliente() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar logo de la empresa");
