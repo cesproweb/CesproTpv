@@ -2,8 +2,15 @@ package views;
 
 import controller.VentaController;
 import model.Producto;
-import views.venta.VentaViewB;
 import data.DatosPrueba;
+
+import views.venta.VentaViewA;
+import views.venta.VentaViewB;
+import views.venta.VentaViewC1;
+import views.venta.VentaViewC2;
+import views.venta.VentaViewC3;
+import views.venta.VentaViewC4;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainView extends BorderPane {
+
+    private VentaController controller = new VentaController(DatosPrueba.cargar());
 
     private StackPane centerPane;
     private ImageView logoCliente;
@@ -99,6 +108,42 @@ public class MainView extends BorderPane {
             new MenuItem("Datos de la empresa"),
             logoEmpresa
         );
+
+        /* ============================================================
+           SUBMENÚ SKIN
+           ============================================================ */
+        Menu menuSkin = new Menu("Skin");
+
+        MenuItem skinA = new MenuItem("Andrómeda");   // Vista A
+        MenuItem skinB = new MenuItem("Orión");       // Vista B
+        MenuItem skinC1 = new MenuItem("Casiopea");   // Vista C1
+        MenuItem skinC2 = new MenuItem("Pegaso");     // Vista C2
+        MenuItem skinC3 = new MenuItem("Hydra");      // Vista C3
+        MenuItem skinC4 = new MenuItem("Fénix");      // Vista C4
+
+        skinA.setOnAction(e -> centerPane.getChildren().setAll(new VentaViewA(controller)));
+        skinB.setOnAction(e -> centerPane.getChildren().setAll(new VentaViewB(controller)));
+        skinC1.setOnAction(e -> centerPane.getChildren().setAll(new VentaViewC1(controller)));
+        skinC2.setOnAction(e -> centerPane.getChildren().setAll(new VentaViewC2(controller)));
+        skinC3.setOnAction(e -> centerPane.getChildren().setAll(new VentaViewC3(controller)));
+        skinC4.setOnAction(e -> centerPane.getChildren().setAll(new VentaViewC4(controller)));
+
+        menuSkin.getItems().addAll(skinA, skinB, skinC1, skinC2, skinC3, skinC4);
+        configuracion.getItems().add(menuSkin);
+
+        /* ============================================================
+           SUBMENÚ TEMA (CLARO / OSCURO)
+           ============================================================ */
+        Menu menuTema = new Menu("Tema");
+
+        MenuItem temaClaro = new MenuItem("Claro");
+        MenuItem temaOscuro = new MenuItem("Oscuro");
+
+        temaClaro.setOnAction(e -> aplicarTema("light-theme.css"));
+        temaOscuro.setOnAction(e -> aplicarTema("dark-theme.css"));
+
+        menuTema.getItems().addAll(temaClaro, temaOscuro);
+        configuracion.getItems().add(menuTema);
 
         Menu ayuda = new Menu("Ayuda");
         MenuItem soporte = new MenuItem("Soporte técnico");
@@ -217,7 +262,6 @@ public class MainView extends BorderPane {
     private List<Producto> cargarProductos() {
         List<Producto> lista = new ArrayList<>();
 
-        // EJEMPLO — Sustituye por tu carga real desde BD
         lista.add(new Producto(
                 1,
                 "Incienso Natural",
@@ -230,15 +274,12 @@ public class MainView extends BorderPane {
     }
 
     /* ============================================================
-       ABRIR NUEVA VENTA (CORREGIDO)
+       ABRIR NUEVA VENTA
        ============================================================ */
     private void abrirNuevaVenta() {
 
-        List<Producto> productos = cargarProductos();
-
         VentaController controller = new VentaController(DatosPrueba.cargar());
-
-        VentaViewB vista = new VentaViewB(controller);
+        VentaViewC4 vista = new VentaViewC4(controller);
 
         Scene escenaVenta = new Scene(vista, 1200, 700);
         stage.setScene(escenaVenta);
@@ -338,5 +379,18 @@ public class MainView extends BorderPane {
             Image img = new Image(archivo.toURI().toString());
             logoCliente.setImage(img);
         }
+    }
+
+    /* ============================================================
+       APLICAR TEMA (CLARO / OSCURO)
+       ============================================================ */
+    private void aplicarTema(String cssFile) {
+        Scene scene = getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(
+            getClass().getResource("/styles/" + cssFile).toExternalForm()
+        );
     }
 }

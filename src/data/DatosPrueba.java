@@ -17,6 +17,7 @@ public class DatosPrueba {
         Atributo tamaño = new Atributo(1, "Tamaño");
         Atributo color = new Atributo(2, "Color");
         Atributo peso = new Atributo(3, "Peso");
+        Atributo formato = new Atributo (4, "Formato");
 
         /* ============================================================
            PRODUCTO 1 — INCIENSO PREMIUM
@@ -70,7 +71,7 @@ public class DatosPrueba {
                 "Lámina Decorativa",
                 Categoria.LAMINA,
                 4.00,
-                "/icons/lamina_deco.png"
+                "/icons/lamina-deco.png"
         );
 
         Variante lamA4Azul = new Variante(5, 4.00);
